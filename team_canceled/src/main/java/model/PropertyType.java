@@ -6,5 +6,6 @@ import lombok.Getter;
 public enum PropertyType {
     HOME,
     WORK,
+    STORE,
     OTHER
 }
