@@ -1,5 +1,4 @@
-package model;
-
+package gr.athtech.spring.app.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,12 +12,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
-public class Address extends BaseModel{
-    private String streetName;
-    private Integer streetNumber;
-    private Integer postalCode;
-    private String city;
-    private Integer floor;
-    private PropertyType propertyType;
 
+public class ProductCategory extends BaseModel{
+    private String name;
+    private String description;
 }

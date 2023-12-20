@@ -1,4 +1,4 @@
-package model;
+package gr.athtech.spring.app.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

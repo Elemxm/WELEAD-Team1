@@ -1,4 +1,4 @@
-package model;
+package gr.athtech.spring.app.model;
 
 import java.io.Serializable;
 import lombok.Getter;
