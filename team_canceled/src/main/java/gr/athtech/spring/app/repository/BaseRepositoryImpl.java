@@ -2,7 +2,7 @@ package gr.athtech.spring.app.repository;
 
 import gr.athtech.spring.app.base.BaseComponent;
 import gr.athtech.spring.app.model.BaseModel;
-import gr.athtech.spring.app.sevice.BaseService;
+import gr.athtech.spring.app.service.BaseService;
 
 import java.util.ArrayList;
 import java.util.Arrays;

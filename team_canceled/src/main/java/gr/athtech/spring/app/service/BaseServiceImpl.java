@@ -1,4 +1,4 @@
-package gr.athtech.spring.app.sevice;
+package gr.athtech.spring.app.service;
 
 import gr.athtech.spring.app.base.BaseComponent;
 import gr.athtech.spring.app.model.BaseModel;

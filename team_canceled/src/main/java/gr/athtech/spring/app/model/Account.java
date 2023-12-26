@@ -20,5 +20,5 @@ public class Account extends BaseModel{
     private Address address;
     private Integer phone;
     private String password;
-    private  AccountCategory accountCategory;
+    private AccountCategory accountCategory;
 }
