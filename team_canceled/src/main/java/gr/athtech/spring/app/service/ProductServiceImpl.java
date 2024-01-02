@@ -23,13 +23,4 @@ public abstract class ProductServiceImpl extends BaseServiceImpl<Product> implem
     public Product findByName(final String Name) {
         return productRepository.findByName(Name);
     }
-
-    /////////////////////////////////////////////////////////////////////
-//    @Override
-//    public Product create(final Product product, final Long productCategoryId) {
-//        var productCategory = productCategoryService.get(productCategoryId);
-//        product.setCategories(productCategory);
-//        return productRepository.create(product);
-//    }
-    ///////////////////////////////////////////////////////////////////
 }

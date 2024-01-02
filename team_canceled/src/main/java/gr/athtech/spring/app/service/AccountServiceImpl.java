@@ -1,6 +1,7 @@
 package gr.athtech.spring.app.service;
 
 import gr.athtech.spring.app.model.Account;
+import gr.athtech.spring.app.model.Address;
 import gr.athtech.spring.app.repository.BaseRepository;
 import gr.athtech.spring.app.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,22 +22,23 @@ public class AccountServiceImpl extends BaseServiceImpl<Account> implements Acco
         return accountRepository.findByEmail(email);
     }
 
-    public Account findByPhone(final Integer phone) { return accountRepository.
-            findByPhone(phone); }
-
-    public Account signup(String email, Integer phone, String password) {
-        //1) Check through Repository if everything is ok!!!
-        accountRepository.signup(email, phone, password);
-        //2) Create new account with the given data!
-        Account newAccount = new Account();
-        newAccount.setEmail(email);
-        newAccount.setPhone(phone);
-        newAccount.setPassword(password);
-
-        //3) Save and return if the new account is successfully saved!
-        return newAccount;
+    public Account findByPhone(final Integer phone) {
+        return accountRepository.findByPhone(phone);
     }
 
+    public boolean signup(Account account) {
+        //1) Check through Repository account already exists
+        if (accountRepository.exists(account)) {
+            logger.warn("User already exists");
+            return false;
+        } else {
+            //2) Create new account
+            accountRepository.create(account);
+            return true;
+        }
+    }
+
+    //add session
     @Override
     public boolean login(final String email, String password) {
         // Retrieve user by username from the repository
@@ -44,6 +46,21 @@ public class AccountServiceImpl extends BaseServiceImpl<Account> implements Acco
 
         // Check if the user exists and the provided password is correct
         return account != null && password.equals(account.getPassword());
+    }
+
+    @Override
+    public void changePassword(Account account, String password) {
+        if (accountRepository.exists(account)) {
+            account.setPassword(password);
+        }
+
+        accountRepository.update(account);
+    }
+
+    @Override
+    public void addAddress(Account account, Address address) {
+        account.getAddresses().add(address);
+        accountRepository.update(account);
     }
 
     //pending
