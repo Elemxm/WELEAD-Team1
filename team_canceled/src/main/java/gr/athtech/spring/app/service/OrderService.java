@@ -3,7 +3,6 @@ package gr.athtech.spring.app.service;
 import gr.athtech.spring.app.model.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 
 public interface OrderService extends BaseService<Order, Long> {
     Order initiateOrder(Account account);
