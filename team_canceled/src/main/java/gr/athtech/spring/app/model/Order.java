@@ -23,6 +23,7 @@ public class Order extends BaseModel{
     private Date date;
     private Map<Product, Integer> products; //Maybe we would need to add Id not Product
                                             //Need to Add Hash and Equals properties
+    private Integer orderRating;
     private BigDecimal total;
     private PaymentMethod paymentMethod;
     private BigDecimal deliveryTip;

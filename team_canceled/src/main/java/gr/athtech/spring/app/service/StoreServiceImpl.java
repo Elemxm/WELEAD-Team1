@@ -1,8 +1,10 @@
 package gr.athtech.spring.app.service;
 
+import gr.athtech.spring.app.model.Order;
 import gr.athtech.spring.app.model.Store;
 import gr.athtech.spring.app.model.StoreCategory;
 import gr.athtech.spring.app.repository.BaseRepository;
+import gr.athtech.spring.app.repository.OrderRepository;
 import gr.athtech.spring.app.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,12 +12,14 @@ import org.springframework.stereotype.Service;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreService {
     private final StoreRepository storeRepository;
+    private final OrderRepository orderRepository;
 
     @Override
     protected BaseRepository<Store, Long> getRepository() {
@@ -59,5 +63,35 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         }
         store.setSchedule(updatedHours);
         storeRepository.update(store);
+    }
+
+    @Override
+    public void calculateStoreRating(Store store) {
+        List<Order> orders = orderRepository.findAllStoreOrders(store);
+        int sum = 0;
+        for (Order o: orders) {
+            sum = sum + o.getOrderRating();
+        }
+
+        double finalRating = (double) sum / orders.size();
+
+        store.setStoreRating(finalRating);
+        storeRepository.update(store);
+    }
+
+    @Override
+    public List<Store> findMostFamousStores() {
+        List<Store> stores = storeRepository.findAll();
+        stores.sort(Comparator.comparingDouble(Store::getStoreRating).reversed());
+        int topCount = Math.min(5, stores.size());
+        return stores.subList(0, topCount);
+    }
+
+    @Override
+    public List<Store> findMostFamousStoresByCategory(StoreCategory storeCategory) {
+        List<Store> stores = storeRepository.findByCategory(storeCategory);
+        stores.sort(Comparator.comparingDouble(Store::getStoreRating).reversed());
+        int topCount = Math.min(5, stores.size());
+        return stores.subList(0, topCount);
     }
 }

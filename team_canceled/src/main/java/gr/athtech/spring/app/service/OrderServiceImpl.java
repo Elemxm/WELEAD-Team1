@@ -11,6 +11,7 @@ import java.math.RoundingMode;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
@@ -140,6 +141,12 @@ public abstract class OrderServiceImpl extends BaseServiceImpl<Order> implements
     @Override
     public void changeStatus(Order order, Status status) {
         order.setStatus(status);
+        orderRepository.update(order);
+    }
+
+    @Override
+    public void rateOrder(Order order, Integer orderRating) {
+        order.setOrderRating(orderRating);
         orderRepository.update(order);
     }
 

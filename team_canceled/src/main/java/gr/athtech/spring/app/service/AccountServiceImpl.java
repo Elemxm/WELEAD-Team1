@@ -2,15 +2,20 @@ package gr.athtech.spring.app.service;
 
 import gr.athtech.spring.app.model.Account;
 import gr.athtech.spring.app.model.Address;
+import gr.athtech.spring.app.model.Order;
 import gr.athtech.spring.app.repository.BaseRepository;
 import gr.athtech.spring.app.repository.AccountRepository;
+import gr.athtech.spring.app.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl extends BaseServiceImpl<Account> implements AccountService {
     private final AccountRepository accountRepository;
+    private final OrderRepository orderRepository;
 
     @Override
     protected BaseRepository<Account, Long> getRepository() {
@@ -67,5 +72,10 @@ public class AccountServiceImpl extends BaseServiceImpl<Account> implements Acco
     @Override
     public void logout() {
 
+    }
+
+    @Override
+    public List<Order> viewPlacedOrders(Account account) {
+        return orderRepository.findAllAccountOrders(account);
     }
 }

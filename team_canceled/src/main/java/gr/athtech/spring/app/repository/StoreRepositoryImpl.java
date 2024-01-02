@@ -1,5 +1,6 @@
 package gr.athtech.spring.app.repository;
 
+import gr.athtech.spring.app.model.Order;
 import gr.athtech.spring.app.model.Store;
 import gr.athtech.spring.app.model.StoreCategory;
 import org.springframework.stereotype.Repository;
@@ -41,4 +42,5 @@ public class StoreRepositoryImpl extends BaseRepositoryImpl<Store> implements St
     }
 
     //changeSchedule
+
 }

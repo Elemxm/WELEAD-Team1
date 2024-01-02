@@ -24,7 +24,7 @@ public class Store extends BaseModel{
     private Address address;
     private Integer telephoneNumber;
     private String description;
-    private Double rating;
+    private Double storeRating;
     private ArrayList<StoreCategory> storeCategories;
     private LocalTime[][] schedule = new LocalTime[7][2];
     private BigDecimal minimumOrderPrice;
