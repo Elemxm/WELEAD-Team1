@@ -120,6 +120,14 @@ public abstract class OrderServiceImpl extends BaseServiceImpl<Order> implements
             total = total.add(price.multiply(BigDecimal.valueOf(quantity)));
         }
 
+        order.setTotal(total);
+
+        //Check if order cost is above minimum order value
+        if (order.getTotal().compareTo(order.getStore().getMinimumOrderPrice()) < 0) {
+            logger.warn("Order cost must be above minimum order cost");
+            return null;
+        }
+
         if (order.getDeliveryTip() != null){
             order.setDeliveryTip(deliveryTip);
             total = total.add(deliveryTip);

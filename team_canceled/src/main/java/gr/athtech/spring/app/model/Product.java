@@ -21,5 +21,5 @@ public class Product extends BaseModel {
     private BigDecimal price;
     private String description;
     private Integer quantity;   // what is that used for?
-    private ArrayList<ProductCategory> categories;
+    private ArrayList<ProductCategory> productCategories; //renamed categories->productCategories
 }
