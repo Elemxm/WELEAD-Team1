@@ -32,30 +32,8 @@ public abstract class OrderServiceImpl extends BaseServiceImpl<Order> implements
     public void addItem(final Order order, final Product product) {
         DayOfWeek currentDay = LocalDate.now().getDayOfWeek();
         LocalTime currentTime = LocalTime.now();
-        LocalTime[][] checkSchedule = new LocalTime[1][1];
 
-        if (currentDay == DayOfWeek.MONDAY) {
-            checkSchedule[0][0] = order.getStore().getSchedule()[0][0];
-            checkSchedule[0][1] = order.getStore().getSchedule()[0][1];
-        } else if (currentDay == DayOfWeek.TUESDAY) {
-            checkSchedule[0][0] = order.getStore().getSchedule()[1][0];
-            checkSchedule[0][1] = order.getStore().getSchedule()[1][1];
-        } else if (currentDay == DayOfWeek.WEDNESDAY) {
-            checkSchedule[0][0] = order.getStore().getSchedule()[2][0];
-            checkSchedule[0][1] = order.getStore().getSchedule()[2][1];
-        } else if (currentDay == DayOfWeek.THURSDAY) {
-            checkSchedule[0][0] = order.getStore().getSchedule()[3][0];
-            checkSchedule[0][1] = order.getStore().getSchedule()[3][1];
-        } else if (currentDay == DayOfWeek.FRIDAY) {
-            checkSchedule[0][0] = order.getStore().getSchedule()[4][0];
-            checkSchedule[0][1] = order.getStore().getSchedule()[4][1];
-        } else if (currentDay == DayOfWeek.SATURDAY) {
-            checkSchedule[0][0] = order.getStore().getSchedule()[5][0];
-            checkSchedule[0][1] = order.getStore().getSchedule()[5][1];
-        } else if (currentDay == DayOfWeek.SUNDAY) {
-            checkSchedule[0][0] = order.getStore().getSchedule()[6][0];
-            checkSchedule[0][1] = order.getStore().getSchedule()[6][1];
-        }
+        LocalTime[][] checkSchedule = check(currentDay, order);
 
         if (currentTime.isAfter(checkSchedule[0][0]) && currentTime.isBefore(checkSchedule[0][1])){
             if (checkNullability(order, product)) {
@@ -66,7 +44,7 @@ public abstract class OrderServiceImpl extends BaseServiceImpl<Order> implements
 
             // If product is already contained in the order, don't add it again, just increase the quantity accordingly
             for (Product p : products.keySet()) {
-                if (p.getName().equals(product.getName())) {
+                if (p.getId().equals(product.getId())) {
                     products.put(p, products.getOrDefault(p, 0) + 1);
                     break;
                 }
@@ -102,12 +80,14 @@ public abstract class OrderServiceImpl extends BaseServiceImpl<Order> implements
         if (order.getAccount().equals(account)) {
             orderRepository.delete(order);
         }
+
+        //orderRepository.deleteById(order.getId());
     }
 
     @Override
     public Order checkout(final Order order, final PaymentMethod paymentMethod, final BigDecimal deliveryTip) {
         if (!validate(order)) {
-            logger.warn("Order should have customer, order items, and payment type defined before being able to " +
+            logger.warn("Order should have account, products, and payment method defined, before being able to " +
                     "checkout the order.");
             return null;
         }
@@ -170,5 +150,34 @@ public abstract class OrderServiceImpl extends BaseServiceImpl<Order> implements
 
     private boolean validate(Order order) {
         return order != null && !order.getProducts().isEmpty() && order.getAccount() != null;
+    }
+
+    private LocalTime[][] check(DayOfWeek currentDay, Order order) {
+        LocalTime[][] checkSchedule = new LocalTime[1][1];
+
+        if (currentDay == DayOfWeek.MONDAY) {
+            checkSchedule[0][0] = order.getStore().getSchedule()[0][0];
+            checkSchedule[0][1] = order.getStore().getSchedule()[0][1];
+        } else if (currentDay == DayOfWeek.TUESDAY) {
+            checkSchedule[0][0] = order.getStore().getSchedule()[1][0];
+            checkSchedule[0][1] = order.getStore().getSchedule()[1][1];
+        } else if (currentDay == DayOfWeek.WEDNESDAY) {
+            checkSchedule[0][0] = order.getStore().getSchedule()[2][0];
+            checkSchedule[0][1] = order.getStore().getSchedule()[2][1];
+        } else if (currentDay == DayOfWeek.THURSDAY) {
+            checkSchedule[0][0] = order.getStore().getSchedule()[3][0];
+            checkSchedule[0][1] = order.getStore().getSchedule()[3][1];
+        } else if (currentDay == DayOfWeek.FRIDAY) {
+            checkSchedule[0][0] = order.getStore().getSchedule()[4][0];
+            checkSchedule[0][1] = order.getStore().getSchedule()[4][1];
+        } else if (currentDay == DayOfWeek.SATURDAY) {
+            checkSchedule[0][0] = order.getStore().getSchedule()[5][0];
+            checkSchedule[0][1] = order.getStore().getSchedule()[5][1];
+        } else if (currentDay == DayOfWeek.SUNDAY) {
+            checkSchedule[0][0] = order.getStore().getSchedule()[6][0];
+            checkSchedule[0][1] = order.getStore().getSchedule()[6][1];
+        }
+
+        return checkSchedule;
     }
 }

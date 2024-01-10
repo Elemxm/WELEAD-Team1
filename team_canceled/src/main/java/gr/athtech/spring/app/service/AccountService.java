@@ -9,14 +9,14 @@ import java.util.List;
 public interface AccountService extends BaseService<Account, Long> {
     Account findByEmail(String email);
     Account findByPhone(Integer phone);
-    boolean login(String email, String password);   //add session
+
     boolean signup(Account account);
 
-    void changePassword(Account account, String password);
+    void changePassword(Long id, String password);
 
-    void addAddress(Account account, Address address);
+    List<Order> viewPlacedOrders(Long id);
 
-    List<Order> viewPlacedOrders(Account account);
-
-    void logout();  //pending
+    //Pending Methods
+    boolean login(String email, String password);
+    void logout();
 }

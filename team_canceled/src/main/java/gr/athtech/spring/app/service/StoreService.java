@@ -12,9 +12,9 @@ public interface StoreService extends BaseService<Store, Long> {
 
     List<Store> findByCategory(StoreCategory storeCategory);
 
-    void changeSchedule(Store store, DayOfWeek day, LocalTime opening, LocalTime closing);
+    void changeSchedule(Long id, DayOfWeek day, LocalTime opening, LocalTime closing);
 
-    void calculateStoreRating(Store store);
+    void calculateStoreRating(Long id);
 
     List<Store> findMostFamousStores();
 

@@ -1,7 +1,6 @@
 package gr.athtech.spring.app.service;
 
 import gr.athtech.spring.app.model.Account;
-import gr.athtech.spring.app.model.Address;
 import gr.athtech.spring.app.model.Order;
 import gr.athtech.spring.app.repository.BaseRepository;
 import gr.athtech.spring.app.repository.AccountRepository;
@@ -46,25 +45,13 @@ public class AccountServiceImpl extends BaseServiceImpl<Account> implements Acco
         }
     }
 
-    //add session
     @Override
-    public boolean login(final String email, String password) {
-        // Retrieve user by username from the repository
-        Account account = accountRepository.findByEmail(email);
-
-        // Check if the user exists and the provided password is correct
-        return account != null && password.equals(account.getPassword());
-    }
-
-    @Override
-    public void changePassword(Account account, String password) {
-        accountRepository.update(account);
-
+    public void changePassword(Long id, String password) {
+        Account account = accountRepository.get(id);
         if (accountRepository.exists(account)) {
             if (password == null) {
                 throw new IllegalArgumentException("Password cannot be null");
             }
-
             account.setPassword(password);
             accountRepository.update(account);
         }
@@ -75,21 +62,20 @@ public class AccountServiceImpl extends BaseServiceImpl<Account> implements Acco
     }
 
     @Override
-    public void addAddress(Account account, Address address) {
-
-        if( address.getStreetName() == null || address.getStreetNumber() == null || address.getPostalCode() == null) {
-            throw new IllegalArgumentException("Address field cannot be null");
-        } else {
-            if (account.getAddresses().contains(address)) {
-                throw new IllegalStateException("Address already exists for the account");
-            } else {
-                account.getAddresses().add(address);
-                accountRepository.update(account);
-            }
-        }
-
+    public List<Order> viewPlacedOrders(Long id) {
+        Account account = accountRepository.get(id);
+        return orderRepository.findAllAccountOrders(account);
     }
 
+    //add session
+    @Override
+    public boolean login(final String email, String password) {
+        // Retrieve user by username from the repository
+        Account account = accountRepository.findByEmail(email);
+
+        // Check if the user exists and the provided password is correct
+        return account != null && password.equals(account.getPassword());
+    }
 
     //pending
     @Override
@@ -97,8 +83,4 @@ public class AccountServiceImpl extends BaseServiceImpl<Account> implements Acco
 
     }
 
-    @Override
-    public List<Order> viewPlacedOrders(Account account) {
-        return orderRepository.findAllAccountOrders(account);
-    }
 }

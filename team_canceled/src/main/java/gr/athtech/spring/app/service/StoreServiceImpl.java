@@ -36,7 +36,8 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     }
 
     @Override
-    public void changeSchedule(Store store, DayOfWeek day, LocalTime opening, LocalTime closing) {
+    public void changeSchedule(Long id, DayOfWeek day, LocalTime opening, LocalTime closing) {
+        Store store = storeRepository.get(id);
         LocalTime[][] updatedHours = store.getSchedule();
         if (day == DayOfWeek.MONDAY) {
             updatedHours[0][0] = opening;
@@ -65,7 +66,8 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     }
 
     @Override
-    public void calculateStoreRating(Store store) {
+    public void calculateStoreRating(Long id) {
+        Store store = storeRepository.get(id);
         List<Order> orders = orderRepository.findAllStoreOrders(store);
         int sum = 0;
         for (Order o: orders) {
