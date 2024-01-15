@@ -14,6 +14,6 @@ public class ProductResource extends BaseResource {
     private String name;
     private BigDecimal price;
     private String description;
-    private Integer quantity;
+    private StoreResource store;
     private ArrayList<ProductCategoryResource> categories;
 }

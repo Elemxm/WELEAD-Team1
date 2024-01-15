@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public abstract class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderService {
+public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderService {
     private final OrderRepository orderRepository;
 
     @Override
@@ -154,6 +154,7 @@ public abstract class OrderServiceImpl extends BaseServiceImpl<Order> implements
 
     private LocalTime[][] check(DayOfWeek currentDay, Order order) {
         LocalTime[][] checkSchedule = new LocalTime[1][1];
+
 
         if (currentDay == DayOfWeek.MONDAY) {
             checkSchedule[0][0] = order.getStore().getSchedule()[0][0];

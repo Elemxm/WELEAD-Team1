@@ -20,6 +20,6 @@ public class Product extends BaseModel {
     private String name;
     private BigDecimal price;
     private String description;
-    private Integer quantity;   // what is that used for?
+    private Store store;
     private ArrayList<ProductCategory> productCategories; //renamed categories->productCategories
 }

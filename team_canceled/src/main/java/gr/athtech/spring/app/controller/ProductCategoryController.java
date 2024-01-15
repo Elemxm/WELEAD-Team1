@@ -1,6 +1,5 @@
 package gr.athtech.spring.app.controller;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import gr.athtech.spring.app.mapper.BaseMapper;
 import gr.athtech.spring.app.mapper.ProductCategoryMapper;
 import gr.athtech.spring.app.model.ProductCategory;

@@ -10,5 +10,4 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class ProductCategoryResource extends BaseResource {
     private String name;
-    private String description;
 }

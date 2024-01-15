@@ -15,7 +15,7 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
-public class Account extends BaseModel{
+public class Account extends BaseModel {
     private String email;
     private String firstname;
     private String lastname;

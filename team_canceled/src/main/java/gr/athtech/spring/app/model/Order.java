@@ -16,7 +16,6 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
-
 public class Order extends BaseModel{
     private Store store;
     private Account account;

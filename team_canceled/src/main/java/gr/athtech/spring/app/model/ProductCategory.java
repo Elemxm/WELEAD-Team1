@@ -15,5 +15,4 @@ import lombok.ToString;
 
 public class ProductCategory extends BaseModel{
     private String name;
-    private String description;
 }

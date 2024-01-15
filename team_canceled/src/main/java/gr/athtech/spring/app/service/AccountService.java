@@ -1,7 +1,6 @@
 package gr.athtech.spring.app.service;
 
 import gr.athtech.spring.app.model.Account;
-import gr.athtech.spring.app.model.Address;
 import gr.athtech.spring.app.model.Order;
 
 import java.util.List;
